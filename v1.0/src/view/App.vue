@@ -2,13 +2,26 @@
   <v-app>
     <v-main>
       <div class="board">
+
+        <div class="titles">
+          <h1 v-if= "gameState === 'over'" id="gameOver">Game over</h1>
+          <div v-else>
+            <h1>Snake</h1>
+            <p id="pontos">Points: {{points}}</p>
+          </div>
+          
+        </div>
+
         <div v-for="(line, index_i) in board" :key = index_i class="rows">
           <Tile v-for= "(element, index_j) in line" :key = index_j :value = "element" :i = "index_i" :j = "index_j"/>
         </div>
+
         <div class="buttons">
-          <button v-if = "playing === null"  v-on:click=start>Start</button>
-          <button v-else v-on:click=stop>Stop</button>
+          <button v-if = "gameState === 'paused'"  v-on:click=start>Start</button>
+          <button v-else-if="gameState === 'playing'" v-on:click=pause>Pause</button>
+          <button v-else v-on:click=restart>Restart</button>
         </div>
+        
       </div>
       
     </v-main>
@@ -27,31 +40,30 @@
   var direction = 'd';
 
   Mousetrap.bind('w', function() {
-    direction == 's'? direction : direction = 'w';
+    direction == 's' ? direction : direction = 'w';
   });
   Mousetrap.bind('a', function() {
-    direction == 'd'? direction : direction = 'a';
+    direction == 'd' ? direction : direction = 'a';
   });
   Mousetrap.bind('s', function() {
-    direction == 'w'? direction : direction = 's'; 
+    direction == 'w' ? direction : direction = 's';
   });
   Mousetrap.bind('d', function() {
-    direction == 'a'? direction : direction = 'd'; 
+    direction == 'a' ? direction : direction = 'd';
   });
-
   Mousetrap.bind('up', function() {
-    direction == 's'? direction : direction = 'w'; 
+    direction == 's' ? direction : direction = 'w';
   });
   Mousetrap.bind('left', function() {
-    direction == 'd'? direction : direction = 'a';
+    direction == 'd' ? direction : direction = 'a';
   });
   Mousetrap.bind('down', function() {
-    direction == 'w'? direction : direction = 's'; 
+    direction == 'w' ? direction : direction = 's';
   });
   Mousetrap.bind('right', function() {
-    direction == 'a'? direction : direction = 'd'; 
+    direction == 'a' ? direction : direction = 'd';
   });
-  
+
   export default {
     components: {Tile},
     name: 'App',
@@ -70,24 +82,43 @@
           [0,0,0,0,0,0,0,0,0,0,0],
           [0,0,0,0,0,0,0,0,0,0,0],
         ],
-        playing: null,
+        updateFunction: null,
+        inputFunction: null,
+        points: 1,
+        gameState: "paused",
       }
     },
     methods:{
-      updateBoard(){
+      update(){
         ipcRenderer.send("update_direction", direction);
         ipcRenderer.on("update_board", (event, payload)=>{
           this.board = payload;
         });
+        ipcRenderer.on("update_points", (event, payload)=>{
+          this.points = payload;
+        });
+        ipcRenderer.on("game_over", (event, payload)=>{
+          this.pause();
+          this.gameState = payload;
+        });
       },
       start(){
-        if(this.playing == null){
-          this.playing = setInterval(this.updateBoard, 450);
+        if(this.gameState == "paused"){
+          this.updateFunction = setInterval(this.update, 250);
+          this.gameState = "playing";
         }
       },
-      stop(){
-        clearInterval(this.playing);
-        this.playing = null;
+
+      pause(){
+        clearInterval(this.updateFunction);
+        this.gameState = "paused";
+
+      },
+      restart(){
+        ipcRenderer.send("reset", "reset");
+        this.points = 1;
+        ipcRenderer.on("reseted_board", (event, payload)=>{this.board = payload});
+        this.gameState = "paused"
       }
     }
   };
@@ -152,5 +183,23 @@
     padding: 10px;
     color: white;
     margin: 10px;
+  }
+  .titles{
+    width: 330px;
+  }
+  .titles div{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .titles h1{
+    font-family: 'Roboto';
+    font-size: 30pt;
+  }
+  #pontos{
+     margin-bottom: 6pt;
+  }
+  #gameOver{
+    color:red;
   }
 </style>

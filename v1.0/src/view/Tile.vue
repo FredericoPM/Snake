@@ -39,6 +39,7 @@ export default {
     }
     .preenchido{
         background: green;
+        border: 1px solid greenyellow;
     }
     .comida{
         width: 30px;

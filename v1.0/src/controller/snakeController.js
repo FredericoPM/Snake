@@ -18,6 +18,7 @@ var board = [
 
 ipcMain.on("reset", (event, payload)=>{
     direction = "d";
+    snake = [[5,0],];
     board = [
         [0,0,0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,0,0],
@@ -31,9 +32,8 @@ ipcMain.on("reset", (event, payload)=>{
         [0,0,0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,0,0],
     ];
-    snake = [[5,0],];
+    event.reply("reseted_board", board);
 })
-
 ipcMain.on("update_direction", (event, payload)=>{
     direction = payload;
     var oldHead = snake[0];
@@ -54,30 +54,35 @@ ipcMain.on("update_direction", (event, payload)=>{
         break;
     }
 
-    if(board[newHead[0]][newHead[1]] === 2){
-        snake.push(snake[snake.length-1]);
-        ate = true;
+    if(board[newHead[0]][newHead[1]] === 1){
+        event.reply("game_over", "over");
     }else{
-        var last = snake[snake.length-1];
-        board[last[0]][last[1]] = 0;
-    }
-
-    for(var i = snake.length-1; i > 0; i--){
-        snake[i] = snake[i-1];
-    }
-    snake[0] = newHead;
-
-    for (var i = 0; i < snake.length; i++){
-        board[snake[i][0]][snake[i][1]] = 1;
-    }
-    
-    for(;ate;){
-        var i = parseInt((Math.random()*100)%board.length);
-        var j = parseInt((Math.random()*100)%board.length);
-        if(board[i][j]==0){
-            board[i][j]=2;
-            ate = false;
+        if(board[newHead[0]][newHead[1]] === 2){
+            snake.push(snake[snake.length-1]);
+            event.reply("update_points", snake.length);
+            ate = true;
+        }else{
+            var last = snake[snake.length-1];
+            board[last[0]][last[1]] = 0;
         }
+    
+        for(var i = snake.length-1; i > 0; i--){
+            snake[i] = snake[i-1];
+        }
+        snake[0] = newHead;
+    
+        for (var i = 0; i < snake.length; i++){
+            board[snake[i][0]][snake[i][1]] = 1;
+        }
+        
+        for(;ate;){
+            var i = parseInt((Math.random()*100)%board.length);
+            var j = parseInt((Math.random()*100)%board.length);
+            if(board[i][j]==0){
+                board[i][j]=2;
+                ate = false;
+            }
+        }
+        event.reply("update_board", board);
     }
-    event.reply("update_board", board);
 })
