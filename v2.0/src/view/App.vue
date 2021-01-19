@@ -37,31 +37,30 @@
   import Tile from "./Tile"
   import {ipcRenderer} from 'electron'
   var Mousetrap = require('mousetrap');
-  var direction = 'd';
 
   Mousetrap.bind('w', function() {
-    direction == 's' ? direction : direction = 'w';
+    ipcRenderer.send("update_direction", 'w');
   });
   Mousetrap.bind('a', function() {
-    direction == 'd' ? direction : direction = 'a';
+    ipcRenderer.send("update_direction", 'a');
   });
   Mousetrap.bind('s', function() {
-    direction == 'w' ? direction : direction = 's';
+    ipcRenderer.send("update_direction", 's');
   });
   Mousetrap.bind('d', function() {
-    direction == 'a' ? direction : direction = 'd';
+    ipcRenderer.send("update_direction", 'd');
   });
   Mousetrap.bind('up', function() {
-    direction == 's' ? direction : direction = 'w';
+    ipcRenderer.send("update_direction", 'w');
   });
   Mousetrap.bind('left', function() {
-    direction == 'd' ? direction : direction = 'a';
+    ipcRenderer.send("update_direction", 'a');
   });
   Mousetrap.bind('down', function() {
-    direction == 'w' ? direction : direction = 's';
+    ipcRenderer.send("update_direction", 's');
   });
   Mousetrap.bind('right', function() {
-    direction == 'a' ? direction : direction = 'd';
+    ipcRenderer.send("update_direction", 'd');
   });
 
   export default {
@@ -75,7 +74,7 @@
           [0,0,0,0,0,0,0,0,0,0,0],
           [0,0,0,0,0,0,0,0,0,0,0],
           [0,0,0,0,0,0,0,0,0,0,0],
-          [1,0,0,0,0,0,0,0,0,0,0],
+          [2,0,0,0,0,0,0,0,0,0,0],
           [0,0,0,0,0,0,0,0,0,0,0],
           [0,0,0,0,0,0,0,0,0,0,0],
           [0,0,0,0,0,0,0,0,0,0,0],
@@ -90,7 +89,7 @@
     },
     methods:{
       update(){
-        ipcRenderer.send("update_direction", direction);
+        ipcRenderer.send("update_game", '_');
         ipcRenderer.on("update_board", (event, payload)=>{
           this.board = payload;
         });
@@ -112,7 +111,6 @@
       pause(){
         clearInterval(this.updateFunction);
         this.gameState = "paused";
-
       },
       restart(){
         ipcRenderer.send("reset", "reset");

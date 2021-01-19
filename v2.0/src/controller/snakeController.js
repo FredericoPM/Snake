@@ -1,5 +1,6 @@
 const { ipcMain } = require("electron");
-import Snake from "../model/snake"
+import Snake from "../model/snake";
+
 var game = new Snake(11);
 
 ipcMain.on("reset", (event, payload)=>{
@@ -8,7 +9,9 @@ ipcMain.on("reset", (event, payload)=>{
 
 ipcMain.on("update_direction", (event, payload)=>{
     game.direction = payload;
+})
 
+ipcMain.on("update_game", (event, payload)=>{
     if(game.move()){
         event.reply("update_board", game.board);
         event.reply("update_points", game.points);
