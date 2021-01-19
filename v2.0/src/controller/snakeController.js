@@ -35,8 +35,6 @@ ipcMain.on("reset", (event, payload)=>{
     event.reply("reseted_board", board);
 })
 
-
-
 ipcMain.on("update_direction", (event, payload)=>{
     direction = payload;
     var oldHead = snake[0];

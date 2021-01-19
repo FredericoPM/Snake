@@ -21,12 +21,7 @@ async function createWindow() {
       nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION
     }
   })
-  win.webContents.on('did-finish-load', () => {
-    var data = require('../package.json');
-    win.setTitle(data.title);
-    console.log('Loaded');
-  })
-  
+
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
     await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
