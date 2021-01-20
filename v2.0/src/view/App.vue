@@ -16,11 +16,26 @@
           <Tile v-for= "(element, index_j) in line" :key = index_j :value = "element" :i = "index_i" :j = "index_j"/>
         </div>
 
-        <div class="buttons">
-          <button v-if = "gameState === 'paused'"  v-on:click=start>Start</button>
-          <button v-else-if="gameState === 'playing'" v-on:click=pause>Pause</button>
-          <button v-else v-on:click=restart>Restart</button>
-        </div>
+        <v-btn v-if = "gameState === 'paused'"  v-on:click=start color="#bfff00" id="button">
+          <v-icon size="25px" id="icons">
+            {{icons.mdiPlay}}
+          </v-icon>
+          <span class = "button-text">Start</span>
+        </v-btn>
+
+        <v-btn v-else-if="gameState === 'playing'" v-on:click=pause color="#bfff00" id="button">
+          <v-icon size="25px" id="icons">
+            {{icons.mdiPause}}
+          </v-icon>
+          <span class = "button-text">Pause</span>
+        </v-btn>
+
+        <v-btn v-else v-on:click=restart color="#FFE00D" id="button">
+          <v-icon size="25px" id="icons">
+            {{icons.mdiRestart}}
+          </v-icon>
+          <span class = "button-error-text">Restart</span>
+        </v-btn>
         
       </div>
       
@@ -29,14 +44,20 @@
 </template>
 
 <script>
-  window.onload=function(e){
+  import Tile from "./Tile";
+  import {ipcRenderer} from 'electron';
+  var Mousetrap = require('mousetrap');
+
+  import {
+     mdiPlay,
+     mdiPause,
+     mdiRestart,
+  } from "@mdi/js";
+
+  window.onload = function(e){
     ipcRenderer.send("reset", "reset");
     return e;
   }
-
-  import Tile from "./Tile"
-  import {ipcRenderer} from 'electron'
-  var Mousetrap = require('mousetrap');
 
   Mousetrap.bind('w', function() {
     ipcRenderer.send("update_direction", 'w');
@@ -62,7 +83,7 @@
   Mousetrap.bind('right', function() {
     ipcRenderer.send("update_direction", 'd');
   });
-
+  
   export default {
     components: {Tile},
     name: 'App',
@@ -74,7 +95,7 @@
           [0,0,0,0,0,0,0,0,0,0,0],
           [0,0,0,0,0,0,0,0,0,0,0],
           [0,0,0,0,0,0,0,0,0,0,0],
-          [15,5,0,0,0,0,0,0,0,0,0],
+          [15,7,5,0,0,0,0,0,0,0,0],
           [0,0,0,0,0,0,0,0,0,0,0],
           [0,0,0,0,0,0,0,0,0,0,0],
           [0,0,0,0,0,0,0,0,0,0,0],
@@ -82,9 +103,13 @@
           [0,0,0,0,0,0,0,0,0,0,0],
         ],
         updateFunction: null,
-        inputFunction: null,
         points: 1,
         gameState: "paused",
+        icons: {
+          mdiPlay,
+          mdiPause,
+          mdiRestart,
+        }
       }
     },
     methods:{
@@ -121,50 +146,7 @@
     }
   };
 </script>
-<style>
-  html, body, div, span, applet, object, iframe,
-  h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-  a, abbr, acronym, address, big, cite, code,
-  del, dfn, em, img, ins, kbd, q, s, samp,
-  small, strike, strong, sub, sup, tt, var,
-  b, u, i, center,
-  dl, dt, dd, ol, ul, li,
-  fieldset, form, label, legend,
-  table, caption, tbody, tfoot, thead, tr, th, td,
-  article, aside, canvas, details, embed, 
-  figure, figcaption, footer, header, hgroup, 
-  menu, nav, output, ruby, section, summary,
-  time, mark, audio, video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-  }
-  /* HTML5 display-role reset for older browsers */
-  article, aside, details, figcaption, figure, 
-  footer, header, hgroup, menu, nav, section {
-    display: block;
-  }
-  body {
-    line-height: 1;
-  }
-  ol, ul {
-    list-style: none;
-  }
-  blockquote, q {
-    quotes: none;
-  }
-  blockquote:before, blockquote:after,
-  q:before, q:after {
-    content: '';
-    content: none;
-  }
-  table {
-    border-collapse: collapse;
-    border-spacing: 0;
-  }
+<style scoped>
   .rows{
     display: flex;
   }
@@ -174,13 +156,6 @@
     align-items: center;
     justify-content: center;
     height: 100%;
-  }
-  .buttons button{
-    background: #3498DB;
-    border-radius: 5px;
-    padding: 10px;
-    color: white;
-    margin: 10px;
   }
   .titles{
     width: 330px;
@@ -194,10 +169,28 @@
     font-family: 'Roboto';
     font-size: 30pt;
   }
+  #button{
+    margin-top: 10px;
+    padding: 10px;
+  }
+  .button-text{
+    color: #304000;
+    font-weight: bold;
+    font-size: 1.5em;
+  }
+  .button-error-text{
+    color: #403803;
+    font-weight: bold;
+    font-size: 1.5em;
+  }
   #pontos{
      margin-bottom: 6pt;
   }
   #gameOver{
     color:red;
+  }
+  #icons{
+    margin: 0;
+    margin-right: 5px;
   }
 </style>

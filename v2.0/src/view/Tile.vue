@@ -36,6 +36,7 @@ export default {
     div{
         width: 30px;
         height: 30px;
+        display: flex;
     }
     .parPar{
         background: #D5DBDB;
@@ -50,61 +51,61 @@ export default {
     .ponta-w{
         border-top-right-radius: 15px;
         border-top-left-radius: 15px;
-        border-top: 2px solid green;
-        border-left: 2px solid green;
-        border-right: 2px solid green;
+        border-top: 2px solid #304000;
+        border-left: 2px solid #304000;
+        border-right: 2px solid #304000;
     }
     .ponta-a{
         border-top-left-radius: 15px;
         border-bottom-left-radius: 15px;
-        border-top: 2px solid green;
-        border-left: 2px solid green;
-        border-bottom: 2px solid green;
+        border-top: 2px solid #304000;
+        border-left: 2px solid #304000;
+        border-bottom: 2px solid #304000;
     }
     .ponta-s{
         border-bottom-right-radius: 15px;
         border-bottom-left-radius: 15px;
-        border-bottom: 2px solid green;
-        border-left: 2px solid green;
-        border-right: 2px solid green;
+        border-bottom: 2px solid #304000;
+        border-left: 2px solid #304000;
+        border-right: 2px solid #304000;
     }
     .ponta-d{
         border-top-right-radius: 15px;
         border-bottom-right-radius: 15px;
-        border-top: 2px solid green;
-        border-right: 2px solid green;
-        border-bottom: 2px solid green;
+        border-top: 2px solid #304000;
+        border-right: 2px solid #304000;
+        border-bottom: 2px solid #304000;
     }
     .vertical{
-        border-left: 2px solid green;
-        border-right: 2px solid green;
+        border-left: 2px solid #304000;
+        border-right: 2px solid #304000;
     }
     .horizontal{
-        border-top: 2px solid green;
-        border-bottom: 2px solid green;
+        border-top: 2px solid #304000;
+        border-bottom: 2px solid #304000;
     }
     .top-right{
         border-top-right-radius: 15px;
-        border-top: 2px solid green;
-        border-right: 2px solid green;
+        border-top: 2px solid #304000;
+        border-right: 2px solid #304000;
     }
     .top-left{
         border-top-left-radius: 15px;
-        border-top: 2px solid green;
-        border-left: 2px solid green;
+        border-top: 2px solid #304000;
+        border-left: 2px solid #304000;
     }
     .botton-left{
         border-bottom-left-radius: 15px;
-        border-bottom: 2px solid green;
-        border-left: 2px solid green;
+        border-bottom: 2px solid #304000;
+        border-left: 2px solid #304000;
     }
     .botton-right{
         border-bottom-right-radius: 15px;
-        border-bottom: 2px solid green;
-        border-right: 2px solid green;
+        border-bottom: 2px solid #304000;
+        border-right: 2px solid #304000;
     }
     .preenchido{
-        background: greenyellow;
+        background: #BFFF00;
         width: 30px;
         height: 30px;
     }
@@ -112,7 +113,7 @@ export default {
         width: 10px;
         height: 10px;
         border-radius: 5px;
-        background: black;
+        background: #263300;
     }
     .comida{
         width: 30px;

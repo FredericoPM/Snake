@@ -3,31 +3,43 @@ export default class Snake{
         this._body = [];
         this._board = [];
         this._direction = ["d"];
+        this._comandos = 0;
         //utilizada para resolver o bug de caso o usuario clicar teclas muito rapidamente poder virar para tras
-        this._lastDirection;
 
         this.newBoard(size);
     }
     //setters
     set direction(direction){
-        var canTurnRight = direction == 'd' && this._direction[0] != 'a' && this._lastDirection != 'a';
-        var canTurnLeft = direction == 'a' && this._direction[0] != 'd' && this._lastDirection != 'd';
-        var canTurnUp = direction == 'w' && this._direction[0] != 's' && this._lastDirection != 's';
-        var canTurnDown = direction == 's' && this._direction[0] != 'w' && this._lastDirection != 'w';
-        if(canTurnDown || canTurnLeft || canTurnRight || canTurnUp){
-            this._lastDirection = this._direction[0];
-            this._direction[0] = direction;
-        }else{
-            this._direction.push(direction);
-        }
+        var ultimo =  this._direction.length-1;
+
+        var canTurnRight = direction == 'd' && this._direction[ultimo] != 'a';
+        var canTurnLeft = direction == 'a' && this._direction[ultimo] != 'd';
+        var canTurnUp = direction == 'w' && this._direction[ultimo] != 's';
+        var canTurnDown = direction == 's' && this._direction[ultimo] != 'w';
         
+        if(this._comandos < 2 && (canTurnDown || canTurnLeft || canTurnRight || canTurnUp) && direction != this._direction[ultimo] && this._direction.length<4){
+            if(this._direction.length == 1 && this._comandos == 0 && this._body[0].d == this._direction[0]){
+                this._direction[0] = direction;
+            }else{
+                this._direction.push(direction);
+            }
+            this._comandos++;
+        }else if(this._comandos == 2 || this._direction.length >= 4){
+            canTurnRight = direction == 'd' && this._direction[ultimo - 1] != 'a';
+            canTurnLeft = direction == 'a' && this._direction[ultimo - 1] != 'd';
+            canTurnUp = direction == 'w' && this._direction[ultimo - 1] != 's';
+            canTurnDown = direction == 's' && this._direction[ultimo - 1] != 'w';
+            if(this._comandos < 2 && (canTurnDown || canTurnLeft || canTurnRight || canTurnUp) && direction != this._direction[ultimo-1]){
+                this._direction[ultimo] = direction;
+            }
+        }
     }
     //getters
     get board(){
         return this._board;
     }
     get points(){
-        return this._body.length;
+        return this._body.length-3;
     }
     //funções privadas
     //cria uma nova comida no tabuleiro numa posição nao ocupada
@@ -140,8 +152,9 @@ export default class Snake{
             [0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0],
         ];
-        this._direction[0] = 'd';
-        this._body = [{x: parseInt(size/2), y:1, d:this._direction[0]}];
+        this._direction = ['d'];
+        this._body = [{x: parseInt(size/2), y:2, d:this._direction[0]}];
+        this._body.push({x: parseInt(size/2), y:1, d:this._direction[0]});
         this._body.push({x: parseInt(size/2), y:0, d:this._direction[0]});
         this._setSnake();
         this._randomFood();
@@ -162,10 +175,10 @@ export default class Snake{
         this._updateSnake(newHead);
         this._setSnake();
 
-        this._lastDirection = this._direction[0];
         if(this._direction.length > 1){
             this._direction.shift();
         }
+        this._comandos = 0;
         return true;
     }
 }
