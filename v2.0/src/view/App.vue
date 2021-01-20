@@ -74,7 +74,7 @@
           [0,0,0,0,0,0,0,0,0,0,0],
           [0,0,0,0,0,0,0,0,0,0,0],
           [0,0,0,0,0,0,0,0,0,0,0],
-          [2,0,0,0,0,0,0,0,0,0,0],
+          [15,5,0,0,0,0,0,0,0,0,0],
           [0,0,0,0,0,0,0,0,0,0,0],
           [0,0,0,0,0,0,0,0,0,0,0],
           [0,0,0,0,0,0,0,0,0,0,0],
@@ -103,7 +103,7 @@
       },
       start(){
         if(this.gameState == "paused"){
-          this.updateFunction = setInterval(this.update, 250);
+          this.updateFunction = setInterval(this.update, 200);
           this.gameState = "playing";
         }
       },

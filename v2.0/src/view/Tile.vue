@@ -1,25 +1,28 @@
 <template>
-    <div v-if="(i%2 === 0 && j%2 === 0) || (i%2 === 1 && j%2 === 1)" class = "parPar">
-        <div v-if="value === 1" class = "comida"></div>
-        <div v-else-if="value === 2" class = "preenchido ini"></div>
-        <div v-else-if="value === 3" class = "preenchido ver"></div>
-        <div v-else-if="value === 4" class = "preenchido hor"></div>
-        <div v-else-if="value === 5" class = "preenchido qds"></div>
-        <div v-else-if="value === 6" class = "preenchido qes"></div>
-        <div v-else-if="value === 7" class = "preenchido qdi"></div>
-        <div v-else-if="value === 8" class = "preenchido qei"></div>
-        <div v-else-if="value === 9" class = "preenchido fim"></div>
-    </div>
-    <div v-else-if="(i%2 === 1 && j%2 === 0) || (i%2 === 0 && j%2 === 1)" class = "impPar">
-        <div v-if="value === 1" class = "comida"></div>
-        <div v-else-if="value === 2" class = "preenchido ini"></div>
-        <div v-else-if="value === 3" class = "preenchido ver"></div>
-        <div v-else-if="value === 4" class = "preenchido hor"></div>
-        <div v-else-if="value === 5" class = "preenchido qds"></div>
-        <div v-else-if="value === 6" class = "preenchido qes"></div>
-        <div v-else-if="value === 7" class = "preenchido qdi"></div>
-        <div v-else-if="value === 8" class = "preenchido qei"></div>
-        <div v-else-if="value === 9" class = "preenchido fim"></div>
+    <div :class = "(i%2 === 0 && j%2 === 0) || (i%2 === 1 && j%2 === 1) ? 'parPar' : 'impPar'">
+        <div v-if="value === 1" class = "comida"/>
+        <div v-if="value === 2 || value === 14" class = "preenchido ponta-w">
+            <div v-if="value < 6" class="olho"></div>    
+            <div v-if="value < 6" class="olho"></div>    
+        </div>
+        <div v-else-if="value === 3 || value === 15" class = "preenchido ponta-a">
+            <div v-if="value < 6" class="olho"></div>
+            <div v-if="value < 6" class="olho"></div>
+        </div>
+        <div v-else-if="value === 4 || value === 12" class = "preenchido ponta-s">
+            <div v-if="value < 6" class="olho"></div>
+            <div v-if="value < 6" class="olho"></div>
+        </div>
+        <div v-else-if="value === 5 || value === 13" class = "preenchido ponta-d">
+            <div v-if="value < 6" class="olho"></div>
+            <div v-if="value < 6" class="olho"></div>
+        </div>
+        <div v-else-if="value === 6" class = "preenchido vertical"/>
+        <div v-else-if="value === 7" class = "preenchido horizontal"/>
+        <div v-else-if="value === 8" class = "preenchido top-right"/>
+        <div v-else-if="value === 9" class = "preenchido top-left"/>
+        <div v-else-if="value === 10" class = "preenchido botton-right"/>
+        <div v-else-if="value === 11" class = "preenchido botton-left"/>
     </div>
 </template>
 
@@ -40,44 +43,76 @@ export default {
     .impPar{
         background: #EAEDED;
     }
-    .ini{
-        border: 2px solid greenyellow;
+    .ponta-a, .ponta-d, .ponta-s, .ponta-w{
+        display: flex;
+        justify-content: space-between;
     }
-    .fim{
-        border: 2px solid greenyellow;
-    }
-    .ver{
-        border-left: 2px solid greenyellow;
-        border-right: 2px solid greenyellow;
-    }
-    .hor{
-        border-top: 2px solid greenyellow;
-        border-bottom: 2px solid greenyellow;
-    }
-    .qds{
+    .ponta-w{
         border-top-right-radius: 15px;
-        border-top: 2px solid greenyellow;
-        border-right: 2px solid greenyellow;
-    }
-    .qes{
         border-top-left-radius: 15px;
-        border-top: 2px solid greenyellow;
-        border-left: 2px solid greenyellow;
+        border-top: 2px solid green;
+        border-left: 2px solid green;
+        border-right: 2px solid green;
     }
-    .qei{
+    .ponta-a{
+        border-top-left-radius: 15px;
         border-bottom-left-radius: 15px;
-        border-bottom: 2px solid greenyellow;
-        border-left: 2px solid greenyellow;
+        border-top: 2px solid green;
+        border-left: 2px solid green;
+        border-bottom: 2px solid green;
     }
-    .qdi{
+    .ponta-s{
         border-bottom-right-radius: 15px;
-        border-bottom: 2px solid greenyellow;
-        border-right: 2px solid greenyellow;
+        border-bottom-left-radius: 15px;
+        border-bottom: 2px solid green;
+        border-left: 2px solid green;
+        border-right: 2px solid green;
+    }
+    .ponta-d{
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
+        border-top: 2px solid green;
+        border-right: 2px solid green;
+        border-bottom: 2px solid green;
+    }
+    .vertical{
+        border-left: 2px solid green;
+        border-right: 2px solid green;
+    }
+    .horizontal{
+        border-top: 2px solid green;
+        border-bottom: 2px solid green;
+    }
+    .top-right{
+        border-top-right-radius: 15px;
+        border-top: 2px solid green;
+        border-right: 2px solid green;
+    }
+    .top-left{
+        border-top-left-radius: 15px;
+        border-top: 2px solid green;
+        border-left: 2px solid green;
+    }
+    .botton-left{
+        border-bottom-left-radius: 15px;
+        border-bottom: 2px solid green;
+        border-left: 2px solid green;
+    }
+    .botton-right{
+        border-bottom-right-radius: 15px;
+        border-bottom: 2px solid green;
+        border-right: 2px solid green;
     }
     .preenchido{
-        background: green;
+        background: greenyellow;
         width: 30px;
         height: 30px;
+    }
+    .olho{
+        width: 10px;
+        height: 10px;
+        border-radius: 5px;
+        background: black;
     }
     .comida{
         width: 30px;
