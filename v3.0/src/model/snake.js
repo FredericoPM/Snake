@@ -1,3 +1,4 @@
+import { generateBoard } from '../model/board.js';
 export default class Snake{
     constructor(size){
         this._body = [];
@@ -139,19 +140,7 @@ export default class Snake{
     //funções publicas
     //gera um novo tabuleiro a partir do tamanho passado com uma comida e a cobra
     newBoard(size){
-        this._board =[
-            [0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0],
-        ];
+        this._board = generateBoard(false);
         this._direction = ['d'];
         this._body = [{x: parseInt(size/2), y:2, d:this._direction[0]}];
         this._body.push({x: parseInt(size/2), y:1, d:this._direction[0]});

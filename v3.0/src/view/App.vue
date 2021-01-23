@@ -47,17 +47,14 @@
   import Tile from "./Tile";
   import {ipcRenderer} from 'electron';
   var Mousetrap = require('mousetrap');
+  import { generateBoard } from '../model/board.js';
+  // const {getBoard} = require('electron').remote.require('./board.js');
 
   import {
      mdiPlay,
      mdiPause,
      mdiRestart,
   } from "@mdi/js";
-
-  window.onload = function(e){
-    ipcRenderer.send("reset", "reset");
-    return e;
-  }
 
   Mousetrap.bind('w', function() {
     ipcRenderer.send("update_direction", 'w');
@@ -89,19 +86,7 @@
     name: 'App',
     data: function(){
       return {
-        board: [
-          [0,0,0,0,0,0,0,0,0,0,0],
-          [0,0,0,0,0,0,0,0,0,0,0],
-          [0,0,0,0,0,0,0,0,0,0,0],
-          [0,0,0,0,0,0,0,0,0,0,0],
-          [0,0,0,0,0,0,0,0,0,0,0],
-          [15,7,5,0,0,0,0,0,0,0,0],
-          [0,0,0,0,0,0,0,0,0,0,0],
-          [0,0,0,0,0,0,0,0,0,0,0],
-          [0,0,0,0,0,0,0,0,0,0,0],
-          [0,0,0,0,0,0,0,0,0,0,0],
-          [0,0,0,0,0,0,0,0,0,0,0],
-        ],
+        board: generateBoard(true),
         updateFunction: null,
         points: 1,
         gameState: "paused",
@@ -132,7 +117,6 @@
           this.gameState = "playing";
         }
       },
-
       pause(){
         clearInterval(this.updateFunction);
         this.gameState = "paused";
