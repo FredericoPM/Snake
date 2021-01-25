@@ -1,7 +1,7 @@
 const { ipcMain } = require("electron");
 import Snake from "../model/snake";
 
-var game = new Snake(11);
+var game = new Snake(110);
 
 ipcMain.on("reset", (event, payload)=>{
     event.reply("reseted_board", game.newBoard(11));

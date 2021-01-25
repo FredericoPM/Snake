@@ -113,7 +113,7 @@
       },
       start(){
         if(this.gameState == "paused"){
-          this.updateFunction = setInterval(this.update, 200);
+          this.updateFunction = setInterval(this.update, 50);
           this.gameState = "playing";
         }
       },
