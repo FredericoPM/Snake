@@ -7,8 +7,7 @@
 ## V2
  Já em V2 o jogo teve uma melhoria gráfica onde a cobra foi segmentada e melhormente estilizada, além disso o bug presente na movimentação foi resolvido, a taxa de quadros e os controles continuam os mesmos.
 
-
-
+# 
 |V1|V2|
 | --- | --- |
 | ![sample V1](https://i.imgur.com/gfl6tx1.gif) | ![sample V2](https://i.imgur.com/2c8aNbY.gif) |
