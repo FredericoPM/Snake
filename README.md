@@ -10,4 +10,4 @@
 # 
 |V1|V2|
 | --- | --- |
-| ![sample V1](https://i.imgur.com/gfl6tx1.gif) | ![sample V2](https://i.imgur.com/2c8aNbY.gif) |
+| ![sample V1](https://i.imgur.com/gfl6tx1.gif) | ![sample V2](https://i.imgur.com/HNqMfdu.gif) |
